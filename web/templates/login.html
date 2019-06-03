@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery-3.1.0.min.js"%3E%3C/script%3E'))</script>
+</head>
+<body>
+<div>
+            <form action="/authenticate" method="post">
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                Username
+                            </td>
+                            <td>
+                                <input type="text" name="username" id="username"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Password
+                            </td>
+                            <td>
+                                <input type="password" name="password" id="password"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="submit" value="login" onclick="getData()"/></td>
+                        </tr>
+                    </table>
+                </div>
+
+            </form>
+    <script>
+        function getData(){
+            var a=$('#username').val()
+            var b=$('#password').val()
+            $.ajax({
+            url:'/authenticate',
+            type:'POST'
+            contentType: 'application/json',
+            data=JSON.stringify({
+                "username":a,
+                "password":b
+            }),
+            dataType:'json'
+            });
+            var c=JSON.stringify({
+            "username":a,
+            "password":b
+            })
+        alert(c)
+        }
+    </script>
+        </div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<html>
+<head>
+<title>jQuery Drop Down Menu</title>
+<script type="text/javascript" src="/jquery.js"></script><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>​
+
+<script type="text/javascript">
+// Ejecutamos la funcion ya que se cargo el documento
+$(document).ready(function () {
+// propiedad hover es el evento para cuando el mouse se coloca encima o quita del objeto
+$('.navigation li').hover(
+// Cuando el mouse entra se aplica el fadeIn al UL
+function () {
+//Fade in the navigation submenu
+$('ul', this).fadeIn(); // fadeIn will show the sub cat menu
+},
+// Cuando el mouse se quita se oculta el UL
+function () {
+//Fade out the navigation submenu
+$('ul', this).fadeOut(); // fadeOut will hide the sub cat menu
+}
+);
+});
+</script>
+
+<style type="text/css">
+
+/* Configurando la fuente y tamaño */
+body{
+font-family: Arial, Helvetica,sans-serif;
+font-size:15px;
+}
+
+/* Ajustando margenes, padding y quitando los bullet de los menus */
+.navigation {
+margin:0;
+padding:0;
+list-style:none;
+}
+
+/* ajustando las etiquetas li */
+.navigation li {
+float:left; /* Mostrando los elementos en la misma linea */
+width:150px;
+position:relative;
+}
+
+/* Jugando con las categorias principales */
+.navigation li a {
+background:#262626;
+color:#fff;
+display:block; /* Haciendo que el link cubra todo el elemento li */
+padding:8px 7px 8px 7px;
+text-decoration:none; /* Quita subrayado al link */
+border-top:1px solid #F2861D;
+text-align:center;
+text-transform:uppercase;
+}
+.navigation li a:hover {
+color:#F2861D;
+}
+
+/* Submenu*/
+.navigation ul {
+position:absolute;
+left:0;
+display:none; /* Por defecto oculto */
+margin:0 0 0 -1px;
+padding:0;
+list-style:none;
+border-bottom:3px solid #F2861D;
+}
+
+.navigation ul li {
+width:150px;
+float:left;
+border-top:none;
+}
+
+/* Propiedades de los links en los submenus */
+.navigation ul a {
+display:block; /* Haciendo que el link cubra todo el elemento li */
+height:15px;
+padding:8px 7px 13px 7px;
+color:#fff;
+text-decoration:none;
+border-top:none;
+border-bottom:1px dashed #6B6B6B;
+}
+
+.navigation ul a:hover {
+color:#F2861D;
+}
+</style>
+</head>
+<body>
+<ul class="navigation">
+<li><a href="#" >Main Cat 1</a></li>
+<li><a href="#">Main Cat 2 </a>
+<ul>
+<li><a href="#">Sub Cat 2-1</a></li>
+<li><a href="#">Sub Cat 2-2</a></li>
+<li><a href="#">Sub Cat 2-3</a></li>
+<li><a href="#">Sub Cat 2-4</a></li>
+<li><a href="#">Sub Cat 2-5</a></li>
+</ul>
+<div class="clear"></div>
+</li>
+<li><a href="#">Main Cat 3 </a>
+<ul>
+<li><a href="#">Sub Cat 3-1</a></li>
+<li><a href="#">Sub Cat 3-2</a></li>
+<li><a href="#">Sub Cat 3-3</a></li>
+<li><a href="#">Sub Cat 3-4</a></li>
+<li><a href="#">Sub Cat 3-5</a></li>
+<li><a href="#">Sub Cat 3-6</a></li>
+<li><a href="#">Sub Cat 3-7</a></li>
+</ul>
+<div class="clear"></div>
+</li>
+<li><a href="#">Main Cat </a></li>
+</ul>
+<div class="clear"></div>
+</body>
+</html>​
