@@ -2,7 +2,7 @@ from flask import Flask,render_template, request, session, Response, redirect
 from database import connector
 from model import entities
 import json
-import time
+
 db = connector.Manager()
 engine = db.createEngine()
 
@@ -125,39 +125,18 @@ def delete_message():
 
 @app.route('/authenticate', methods=['POST'])
 def authenticate():
-
     #1. Get Request
-    message=json.loads(request.data)
-    username= message['username']
-    password=message['password']
+    username= request.form['username']
+    password=request.form['password']
     #2. Look in databse
     session=db.getSession(engine)
     try:
         user=session.query(entities.User).filter(entities.User.username==username).filter(entities.User.password==password).one()
-        message={'message':'Authorized'}
-        return Response(message,status=200,mimetype='application/json')
+        return render_template("success.html")
     except Exception:
-        message = {'message': 'UNAuthorized'}
-        return Response(message,status=401,mimetype='application/json')
-
-@app.route('/chat/<username>/')
-def chat(username):
-    db_session = db.getSession(engine)
-    usuario= db_session.query(entities.User).filter(entities.User.username==username).one()
-    mensajes = db_session.query(entities.User).filter(entities.User.id!=usuario.id).all()
-    return render_template('chat.html', messages=mensajes)
-
-@app.route('/chat/<username>/<id>')
-def mostrar_mensajes(username,id):
-    db_session=db.getSession(engine)
-    usuario = db_session.query(entities.User).filter(entities.User.username == username).one()
-    mensajes2 = db_session.query(entities.User).filter(entities.User.id != usuario.id).all()
-    mensajes1 = db_session.query(entities.Message).filter(entities.Message.user_from_id == id).filter(entities.Message.user_to_id==usuario.id).all()
-    return render_template('chat.html', messages=mensajes2,mensajes=mensajes1)
-
-
+        return render_template("fail.html")
 
 if __name__ == '__main__':
-    app.secret_key  = ".."
-    app.run(port=8081, threaded=True, host=('127.0.0.1'))
+    app.secret_key = ".."
+    app.run(port=8080, threaded=True, host=('127.0.0.1'))
 
