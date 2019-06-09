@@ -2,59 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Chat Login</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery-3.1.0.min.js"%3E%3C/script%3E'))</script>
-</head>
-<body>
-<div>
-            <form action="/authenticate" method="post">
-                <div>
-                    <table>
-                        <tr>
-                            <td>
-                                Username
-                            </td>
-                            <td>
-                                <input type="text" name="username" id="username"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Password
-                            </td>
-                            <td>
-                                <input type="password" name="password" id="password"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><input type="submit" value="login" onclick="getData()"/></td>
-                        </tr>
-                    </table>
-                </div>
+    <script src="login.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-            </form>
-    <script>
-        function getData(){
-            var a=$('#username').val()
-            var b=$('#password').val()
-            $.ajax({
-            url:'/authenticate',
-            type:'POST'
-            contentType: 'application/json',
-            data=JSON.stringify({
-                "username":a,
-                "password":b
-            }),
-            dataType:'json'
-            });
-            var c=JSON.stringify({
-            "username":a,
-            "password":b
-            })
-        alert(c)
-        }
-    </script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body bgcolor="green">
+<br>
+<br>
+<br>
+<div class="row ">
+    <div class="col s4"></div>
+    <form class="col s4 card blue">
+        <div class="card-content">
+            <input type="text" name="username" id="username" placeholder="USERNAME GOES HERE"/>
+            <input type="password" name="password" id="password" placeholder="PASSWORD GOES HERE"/>
+                <input type="button" value="login" onclick="getData()"/>
+
         </div>
+            <img src="" id="action"/>
+
+    </form>
+</div>
+
+
+
+
+
+
+
 </body>
 </html>
