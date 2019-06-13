@@ -2,7 +2,7 @@ from flask import Flask,render_template, request, session, Response, redirect
 from database import connector
 from model import entities
 import json
-
+import time
 db = connector.Manager()
 engine = db.createEngine()
 
@@ -123,20 +123,66 @@ def delete_message():
     return "Deleted Message"
 
 
-@app.route('/authenticate', methods=['POST'])
+@app.route('/authenticate', methods = ["POST"])
 def authenticate():
-    #1. Get Request
-    username= request.form['username']
-    password=request.form['password']
-    #2. Look in databse
-    session=db.getSession(engine)
+    time.sleep(3)
+    message = json.loads(request.data)
+    username = message['username']
+    password = message['password']
+    #2. look in database
+    db_session = db.getSession(engine)
     try:
-        user=session.query(entities.User).filter(entities.User.username==username).filter(entities.User.password==password).one()
-        return render_template("success.html")
+        user = db_session.query(entities.User
+            ).filter(entities.User.username == username
+            ).filter(entities.User.password == password
+            ).one()
+        session['logged_user'] = user.id
+        message = {'message': 'Authorized'}
+        return Response(message, status=200, mimetype='application/json')
     except Exception:
-        return render_template("fail.html")
+        message = {'message': 'Unauthorized'}
+        return Response(message, status=401, mimetype='application/json')
+
+
+@app.route('/chat/')
+def chat():
+    return render_template('chat.html')
+
+
+@app.route('/current', methods = ["GET"])
+def current_user():
+    db_session = db.getSession(engine)
+    user = db_session.query(entities.User).filter(
+        entities.User.id == session['logged_user']
+        ).first()
+    return Response(json.dumps(
+            user,
+            cls=connector.AlchemyEncoder),
+            mimetype='application/json'
+        )
+
+@app.route('/logout', methods = ["GET"])
+def logout():
+    session.clear()
+    return render_template('index.html')
+
+@app.route('/messages',methods=['POST'])
+def create_message1():
+    c = json.loads(request.data)
+    user = entities.Message(
+        content=c['content'],
+        user_from_id=c['user_from_id'],
+        user_to_id=c['user_to_id'],
+    )
+    session = db.getSession(engine)
+    session.add(user)
+    session.commit()
+    time.sleep(2)
+    return 'Created User'
+
 
 if __name__ == '__main__':
-    app.secret_key = ".."
+    app.secret_key  = ".."
     app.run(port=8080, threaded=True, host=('127.0.0.1'))
+
 

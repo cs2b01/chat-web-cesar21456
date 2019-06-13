@@ -1,6 +1,7 @@
 function getData(){
         document.getElementById('action').src = "/static/images/ruedita.gif";
         var username = $('#username').val();
+
         var password = $('#password').val();
         var message = JSON.stringify({
                 "username": username,
@@ -23,8 +24,7 @@ function getData(){
                 document.getElementById('action').src = "/static/images/dislike.png";
                 }else{
                 document.getElementById('action').src = "/static/images/ok.png";
-                var a=username;
-                var c="http://127.0.0.1:8081/chat/"+a;
+                var c="http://127.0.0.1:8080/static/chat.html";
                 window.location=c;
                 }
             }
